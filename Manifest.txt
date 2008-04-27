@@ -7,6 +7,9 @@ Rakefile
 config/hoe.rb
 config/requirements.rb
 lib/gitviz.rb
+lib/gitviz/digraph.rb
+lib/gitviz/errors.rb
+lib/gitviz/git_commands.rb
 lib/gitviz/version.rb
 script/console
 script/destroy
