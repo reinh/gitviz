@@ -24,11 +24,8 @@ module GitViz
     end
     
     private    
-    def heads_parents_log
-      GitViz::GitCommands::git :log, @ref, "--pretty=format:\"<%h><%p>\""
-    end
-    
     def heads_parents
+      heads_parents_log = GitViz::GitCommands::git :log, @ref, "--pretty=format:\"<%h><%p>\""
       heads_parents = heads_parents_log.map{|line| line.scan(/^<(.*?)><(.*?)>/).flatten}
       heads_parents.map{|head, parents| [head, parents.split(' ')]}
     end

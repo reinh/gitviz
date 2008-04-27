@@ -27,7 +27,7 @@ describe GitViz::Digraph do
     end
   
     it "takes heads and their parents from the log" do
-      @d.should_receive(:heads_parents_log).and_return(@log_string)
+      GitViz::GitCommands.should_receive(:git).with(:log, "master", "--pretty=format:\"<%h><%p>\"").and_return(@log_string)
       @d.send(:heads_parents).should == @heads_parents
     end
   
