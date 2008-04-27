@@ -1,4 +1,4 @@
-module Gitviz #:nodoc:
+module GitViz #:nodoc:
   module VERSION #:nodoc:
     MAJOR = 0
     MINOR = 0

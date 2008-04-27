@@ -1,15 +1,13 @@
 require 'gitviz/version'
 
-AUTHOR = 'FIXME full name'  # can also be an array of Authors
-EMAIL = "FIXME email"
-DESCRIPTION = "description of gem"
+AUTHOR = 'Rein Henrichs'  # can also be an array of Authors
+EMAIL = "reinh@reinh.com"
+DESCRIPTION = "GitViz creates a DOT digraph from a git commit graph"
 GEM_NAME = 'gitviz' # what ppl will type to install your gem
 RUBYFORGE_PROJECT = 'gitviz' # The unix name for your project
 HOMEPATH = "http://#{RUBYFORGE_PROJECT}.rubyforge.org"
 DOWNLOAD_PATH = "http://rubyforge.org/projects/#{RUBYFORGE_PROJECT}"
-EXTRA_DEPENDENCIES = [
-#  ['activesupport', '>= 1.3.1']
-]    # An array of rubygem dependencies [name, version]
+EXTRA_DEPENDENCIES = []
 
 @config_file = "~/.rubyforge/user-config.yml"
 @config = nil
@@ -34,7 +32,7 @@ end
 REV = nil
 # UNCOMMENT IF REQUIRED:
 # REV = YAML.load(`svn info`)['Revision']
-VERS = Gitviz::VERSION::STRING + (REV ? ".#{REV}" : "")
+VERS = GitViz::VERSION::STRING + (REV ? ".#{REV}" : "")
 RDOC_OPTS = ['--quiet', '--title', 'gitviz documentation',
     "--opname", "index.html",
     "--line-numbers",
