@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'gitviz'
+
+begin
+  $stdout.write GitViz::Digraph.new(ARGV)
+rescue GitViz::InvalidGitRefError => e
+  $stderr.write e.message
+  $stderr.write "\n"
+  Kernel.exit(1)
+end

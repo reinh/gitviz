@@ -1,0 +1,12 @@
+bin/gitviz
+CHANGELOG
+lib/gitviz/digraph.rb
+lib/gitviz/errors.rb
+lib/gitviz/git_commands.rb
+lib/gitviz.rb
+LICENSE
+Manifest
+README
+spec/gitviz_spec.rb
+spec/spec.opts
+spec/spec_helper.rb
