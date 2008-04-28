@@ -1,9 +1,11 @@
 module GitViz
   class Digraph
-    def initialize(ref = "master")
-      raise GitViz::InvalidGitRefError.new("#{ref} is not a valid ref") unless GitViz::GitCommands::valid_ref?(ref)
+    def initialize(ref = "master", options = {})
+      raise GitViz::InvalidGitRefError.new("\"#{ref}\" is not a valid ref") unless GitViz::GitCommands::valid_ref?(ref)
       @ref = ref
+      @options = options
     end
+    attr_reader :ref
     
     def to_dot_graph
       str = digraph_head
@@ -20,18 +22,30 @@ module GitViz
     
     # Pretty object inspection
     def inspect
-      %Q{#<GitViz::Digraph "ref: #{@ref}">}
+      %Q{#<GitViz::Digraph "ref: #{ref}">}
     end
     
-    private    
+    private
+    
+    def rankdir
+      @options[:rankdir] || "TB"
+    end
+    
+    def limit
+      @options[:limit]
+    end
+    
+    # TODO: tail log output instead of slicing array
     def heads_parents
       heads_parents_log = GitViz::GitCommands::git :log, @ref, "--pretty=format:\"<%h><%p>\""
       heads_parents = heads_parents_log.map{|line| line.scan(/^<(.*?)><(.*?)>/).flatten}
-      heads_parents.map{|head, parents| [head, parents.split(' ')]}
+      heads_parents = heads_parents.map{|head, parents| [head, parents.split(' ')]}
+      heads_parents = heads_parents.first(limit) if limit
+      heads_parents
     end
     
     def digraph_head
-      "digraph {\n\trankdir=RL;\n"
+      "digraph {\n\trankdir=#{rankdir};\n"
     end
     
     def digraph_foot

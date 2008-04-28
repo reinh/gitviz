@@ -4,7 +4,9 @@ GitViz
 The GitViz library creates GraphViz dot format graphs from your git commit history.
 
     # From a git repository
-    $ gitviz master > master.dot
+    $ gitviz -O
+
+See gitviz -h for more info.
 
 ## Get It ##
 

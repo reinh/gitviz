@@ -1,11 +1,58 @@
 #!/usr/bin/env ruby
 require 'rubygems'
+require 'optparse'
 require 'gitviz'
 
+BANNER = <<END
+Usage: gitviz [options] [ref]
+
+Description: Parses the given ref (default "master") of the current git
+repository and outputs its dot representation.
+
+Options:
+END
+
+options = {}
+
+op = OptionParser.new do |opts|
+  opts.banner = BANNER
+  
+  opts.on('--rankdir RANKDIR', 'Rank direction for the dot template. Default is TB (Top to Bottom)') do |rankdir|
+    options[:rankdir] = rankdir
+  end
+  
+  opts.on('-l', '--limit LIMIT', 'Limit the number of commits graphed. Default is no limit.') do |limit|
+    options[:limit] = limit.to_i
+  end
+  
+  opts.on('-O', 'Write to <ref>.dot file in current directory') do
+    options[:output] = true
+  end
+  
+  opts.on('-o NAME', 'Write to <NAME>.dot file in current directory') do |name|
+    options[:filename] = name
+  end
+
+  opts.on_tail("-h", "--help", "Show this message") do
+    puts opts
+    exit
+  end  
+end
+
 begin
-  $stdout.write GitViz::Digraph.new(ARGV)
-rescue GitViz::InvalidGitRefError => e
-  $stderr.write e.message
-  $stderr.write "\n"
-  Kernel.exit(1)
+  op.parse!(ARGV)
+  rev = ARGV.first || "master"
+  options[:filename] = rev if options[:output]
+  graph = GitViz::Digraph.new(rev, options)
+  if filename = options[:filename]
+    $stdout.puts "Writing to file #{filename}.dot"
+    File.open("#{filename}.dot", "w") {|f| f.write graph.to_s}
+  else
+    $stdout.puts graph
+  end
+  exit 0
+rescue Exception => e
+  raise e if e.is_a? SystemExit
+  $stderr.puts e.message
+  exit 1
 end
