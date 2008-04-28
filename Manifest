@@ -6,7 +6,7 @@ lib/gitviz/git_commands.rb
 lib/gitviz.rb
 LICENSE
 Manifest
-README
+README.markdown
 spec/gitviz_spec.rb
 spec/spec.opts
 spec/spec_helper.rb

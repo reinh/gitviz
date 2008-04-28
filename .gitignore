@@ -1,0 +1,4 @@
+*.dot
+pkg/
+tmp/
+doc/*

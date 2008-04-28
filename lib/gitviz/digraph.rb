@@ -31,7 +31,7 @@ module GitViz
     end
     
     def digraph_head
-      "digraph {\n\trankdir=TB;\n"
+      "digraph {\n\trankdir=RL;\n"
     end
     
     def digraph_foot
